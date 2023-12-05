@@ -1,4 +1,4 @@
-import openpyxl
+import pandas as pd
 import pathlib
 import os
 import time
@@ -46,22 +46,23 @@ class Usuario:
         return self.celular
 
     def cadastro_user(self, nome, email, senha):
-        try: 
+        try:
             arquivo_path = pathlib.Path("clientes.xlsx")
 
             if arquivo_path.exists():
-                arquivo = openpyxl.load_workbook("clientes.xlsx")
+                # Lê o arquivo Excel existente
+                df = pd.read_excel("clientes.xlsx")
             else:
-                arquivo = openpyxl.Workbook()
-                folha = arquivo.active
-                folha['A1'] = "Nome"
-                folha['B1'] = "Email"
-                folha['C1'] = "Senha"
+                # Cria um DataFrame vazio se o arquivo não existir
+                df = pd.DataFrame(columns=["Nome", "Email", "Senha"])
 
-            folha = arquivo.active
-            folha.append([nome, email, senha])
+            # Adiciona a nova entrada ao DataFrame
+            new_data = {"Nome": nome, "Email": email, "Senha": senha}
+            df = df.append(new_data, ignore_index=True)
 
-            arquivo.save("clientes.xlsx")
+            # Salva o DataFrame de volta no arquivo Excel
+            df.to_excel("clientes.xlsx", index=False)
+
             clear_screen()  # Limpa a tela após o usuário fazer uma escolha
             print('Cadastro feito com sucesso')
             time.sleep(2)  # Aguarda 2 segundos
@@ -72,23 +73,20 @@ class Usuario:
         except Exception as e:
             print(f'Erro ao salvar os dados: {e}')
 
-    
     def login_user(self, email, senha):
         try:
             # Caminho do arquivo
             arquivo_path = pathlib.Path("clientes.xlsx")
 
             if arquivo_path.exists():
-                # Carrega o arquivo Excel
-                arquivo = openpyxl.load_workbook(arquivo_path)
-                folha = arquivo.active
+                # Lê o arquivo Excel existente
+                df = pd.read_excel("clientes.xlsx")
 
                 # Itera sobre as linhas buscando pelo email
-                for row in folha.iter_rows(min_row=2, max_col=2, values_only=True):
-            
-                    if row[0] == email:
+                for index, row in df.iterrows():
+                    if row["Email"] == email:
                         # Se o email é encontrado, verifica a senha
-                        if row[1] == senha:
+                        if row["Senha"] == senha:
                             print("Login feito com sucesso!")
                             return
                         else:
@@ -103,7 +101,8 @@ class Usuario:
 
         except FileNotFoundError:
             print('Arquivo não encontrado. Certifique-se de que o arquivo clientes.xlsx existe.')
-        except openpyxl.workbook.exceptions.PackageNotFoundError:
-            print('Erro ao abrir o arquivo Excel. Verifique se o arquivo clientes.xlsx está formatado corretamente.')
+        except pd.errors.EmptyDataError:
+            # Trata o caso em que o arquivo está vazio
+            print('Arquivo vazio. Certifique-se de que o arquivo clientes.xlsx contém dados.')
         except Exception as e:
             print(f'Erro ao realizar login: {e}')
