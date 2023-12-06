@@ -4,7 +4,7 @@ This is a project for the "Software Project" course. The software aims to provid
 
 ## Functionalities
 
-~~1. **Patient Registration:**~~
+1. **~~Patient Registration:~~**
 2. **Appointment Scheduling:** 
 3. **Medical Record Management**
 4. **Billing and Invoicing**
