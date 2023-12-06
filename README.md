@@ -1,6 +1,6 @@
 # Hospital Management Software
 
-This is a project for the "Software Project"
+This is a project for the "Software Project" course. The software aims to provide comprehensive functionalities for hospital management. Currently, some features have been implemented, and others are in progress.
 
 ## Functionalities
 
@@ -17,7 +17,9 @@ This is a project for the "Software Project"
 
 ## How to Run the Project
 
-Before running the project, make sure to have the `openpyxl` library installed. You can install it using the following command:
+Before running the project, make sure to have Python installed on your machine. You can download Python from the [official website](https://www.python.org/downloads/).
+
+After installing Python, ensure that the `openpyxl` library is installed. You can install it using the following command:
 
 ```bash
 pip install openpyxl
