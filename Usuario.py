@@ -214,12 +214,12 @@ class Usuario:
         except Exception as e:
             print(f'Erro ao desmarcar a consulta: {e}')
 
-    def print_exames_solicitados(self):
+    def print_exames_solicitados_e_marcar_exame(self):
         try:
             dados = self._carregar_dados()
 
             email = input("Digite seu email: ")
-            usuario, _ = self._buscar_usuario_por_email(email, dados)
+            usuario, index = self._buscar_usuario_por_email(email, dados)
 
             if usuario:
                 exames_solicitados = usuario.get("Exames_solicitados", [])
@@ -228,6 +228,24 @@ class Usuario:
                     print("Exames solicitados:")
                     for i, exame in enumerate(exames_solicitados, start=1):
                         print(f"   -> Exame {i}: {exame}")
+                    
+                    marcar = input('Deseja marcar algum desses exames? ')
+                    if marcar.lower() == 'sim':
+                        exame_a_ser_marcado = input('Qual exame deseja marcar? ')
+                        if exame_a_ser_marcado in exames_solicitados:
+                            exames_solicitados.remove(exame_a_ser_marcado)
+                            data = input('Qual a data a ser marcada para o exame? ')
+                            resultado = 'Ainda sem resultado'
+                            exame_marcado = {"Exame": exame_a_ser_marcado, "Data": data, "Resultado": resultado}
+                            usuario.setdefault("Exames_feitos", []).append(exame_marcado)
+                            dados[index] = usuario
+                            self._salvar_dados(dados)
+                            print(f"Exame {exame_a_ser_marcado} marcado com sucesso para a data {data}.")
+                        else:
+                            print("Exame não encontrado na lista de exames solicitados.")
+                    else:
+                        print("Nenhum exame marcado.")
+
                 else:
                     print("Nenhum exame solicitado.")
             else:
@@ -236,7 +254,34 @@ class Usuario:
         except FileNotFoundError:
             print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
         except Exception as e:
-            print(f'Erro ao imprimir exames solicitados: {e}')
+            print(f'Erro ao imprimir/examinar exames solicitados: {e}')
+
+    def print_resultados_exames(self):
+        try:
+            dados = self._carregar_dados()
+
+            email = input("Digite seu email: ")
+            usuario, _ = self._buscar_usuario_por_email(email, dados)
+
+            if usuario:
+                exames_feitos = usuario.get("Exames_feitos", [])
+
+                if exames_feitos:
+                    print("Resultados dos Exames:")
+                    for i, exame in enumerate(exames_feitos, start=1):
+                        print(f"   -> Exame {i}: {exame['Exame']}")
+                        print(f"      Data: {exame['Data']}")
+                        print(f"      Resultado: {exame['Resultado']}")
+                else:
+                    print("Nenhum resultado de exame disponível.")
+
+            else:
+                print(f"Usuário com o email {email} não encontrado.")
+
+        except FileNotFoundError:
+            print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
+        except Exception as e:
+            print(f'Erro ao imprimir resultados de exames: {e}')
 
     def adiocionar_dinheiro(self):
             try:

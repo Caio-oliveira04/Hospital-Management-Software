@@ -73,6 +73,8 @@ class Medico:
         except Exception as e:
             print(f'Erro ao realizar login: {e}')
 
+    def consulta(self):
+
 
     def solicitar_exame(self, nome_exame):
         try:

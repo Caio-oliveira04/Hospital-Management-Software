@@ -21,11 +21,11 @@ while True:
                     /                                                            \\
                     |                    Escolha uma opção                        |
                     |                                                             |
-                    | 1 - Cadastrar-se               6 - Ver exames solicitados   |
-                    | 2 - Fazer Login                7 - Marcar exame             |
-                    | 3 - Marcar Consulta            8 - Ver Resultado do Exame   |
-                    | 4 - Remarcar Consulta          9 - Adicionar Dinheiro       |
-                    | 5 - Desmarcar Consulta         10 - Sair                    |
+                    | 1 - Cadastrar-se               6 - Ver exames solicitados / |
+                    | 2 - Fazer Login                Marcar exame                 |
+                    | 3 - Marcar Consulta            7 - Ver Resultado do Exame   |
+                    | 4 - Remarcar Consulta          8 - Adicionar Dinheiro       |
+                    | 5 - Desmarcar Consulta         9 - Sair                     |
                     \____________________________________________________________/
   
     
@@ -68,6 +68,12 @@ while True:
         usuario1.desmarcar_consulta()
 
     elif escolha == '6':
-        usuario1.print_exames_solicitados()
+        usuario1.print_exames_solicitados_e_marcar_exame()
+    
+    elif escolha == '7':
+        usuario1.print_resultados_exames()
+    
+    elif escolha == '6':
+        usuario1.adiocionar_dinheiro()        
     else:
         break
