@@ -74,10 +74,24 @@ class Medico:
             print(f'Erro ao realizar login: {e}')
 
     def consulta(self):
+        
+        dados = self._carregar_dados_user()
+        email = input("Digite o email do paciente: ")
+        usuario, index = self._buscar_usuario_por_email(email, dados)
 
+        if usuario:
+            print('PRONTUARIO de {nome}')
+            usuario2 = Usuario()
+            usuario2.print_resultados_exames()
+            decisao = input('Deseja Solicitar outro exame? ')
+            if decisao.lower() == 'sim':
+                self.solicitar_exame()
+        else:
+            print(f"Usuário com o email {email} não encontrado.")
 
-    def solicitar_exame(self, nome_exame):
+    def solicitar_exame(self):
         try:
+            nome_exame = input('Qual o nome do exame a ser marcado? ')
             dados = self._carregar_dados_user()
 
             email = input("Digite seu email: ")
@@ -90,7 +104,7 @@ class Medico:
                 self.clear_screen()
                 print(f'Exame "{nome_exame}" solicitado com sucesso!')
                 time.sleep(2)
-
+                return
             else:
                 print(f"Usuário com o email {email} não encontrado.")
 
@@ -118,7 +132,7 @@ class Medico:
                 print("Por favor, responda com 'Sim' ou 'Não'.")
                 decisao = input('Ver remédio que o paciente já está tomando (Sim/Não)?').lower()
 
-            if decisao == 'sim':
+            if decisao.lower() == 'sim':
                 self.mostrar_medicamentos_paciente(usuario)
 
             novo_medicamento = input("Digite o novo medicamento: ")

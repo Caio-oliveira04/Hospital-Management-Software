@@ -44,6 +44,9 @@ while True:
     if escolha == '1':
         medico1.login_med()
 
+    elif escolha == '2':
+        medico1.consulta()
+
     elif escolha == '4':
         medico1.solicitar_exame("Hemograma")
 
