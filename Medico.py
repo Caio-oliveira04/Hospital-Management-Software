@@ -83,18 +83,18 @@ class Medico:
             print('PRONTUARIO de {nome}')
             usuario2 = Usuario()
             usuario2.print_resultados_exames()
+
             decisao = input('Deseja Solicitar outro exame? ')
             if decisao.lower() == 'sim':
-                self.solicitar_exame()
+                self.solicitar_exame(email)
         else:
             print(f"Usuário com o email {email} não encontrado.")
 
-    def solicitar_exame(self):
+    def solicitar_exame_interna(self, email):
         try:
             nome_exame = input('Qual o nome do exame a ser marcado? ')
             dados = self._carregar_dados_user()
 
-            email = input("Digite seu email: ")
             usuario, index = self._buscar_usuario_por_email(email, dados)
 
             if usuario:
@@ -113,41 +113,54 @@ class Medico:
         except Exception as e:
             print(f'Erro ao solicitar o exame: {e}')
 
-            
-        
-    def prescrever_medicacao(self, dados):
+    def solicitar_exame_externa(self):
         try:
-            email = input("Por favor, digite o email do paciente para o qual você irá prescrever: ")
+            nome_exame = input('Qual o nome do exame a ser marcado? ')
+            dados = self._carregar_dados_user()
+
+            email = input("Digite o email do paciente: ")
             usuario, index = self._buscar_usuario_por_email(email, dados)
 
-            if usuario is None:
-                print(f"Usuário com o email {email} não encontrado.")
+            if usuario:
+                usuario["Exames_solicitados"].append(nome_exame)
+                self._salvar_dados_user(dados)  # Corrigido para salvar dados do usuário
+
+                self.clear_screen()
+                print(f'Exame "{nome_exame}" solicitado com sucesso!')
+                time.sleep(2)
                 return
+            else:
+                print(f"Usuário com o email {email} não encontrado.")
 
-            self.clear_screen()
-
-            decisao = input('Ver remédio que o paciente já está tomando (Sim/Não)?').lower()
-
-            while decisao not in ['sim', 'não']:
-                print("Por favor, responda com 'Sim' ou 'Não'.")
-                decisao = input('Ver remédio que o paciente já está tomando (Sim/Não)?').lower()
-
-            if decisao.lower() == 'sim':
-                self.mostrar_medicamentos_paciente(usuario)
-
-            novo_medicamento = input("Digite o novo medicamento: ")
-
-            # Inicializa a lista de medicamentos se ainda não existir
-            usuario.setdefault("Medicamentos", [])
-            usuario["Medicamentos"].append(novo_medicamento)
-
-            dados[index] = usuario  # Atualiza os dados do usuário na lista
-            self._salvar_dados_med(dados)
-
+        except FileNotFoundError:
+            print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
         except Exception as e:
-            print(f'Erro ao prescrever medicamento: {e}')
+            print(f'Erro ao solicitar o exame: {e}')        
+        
+    def receitar_remedio(self):
+        try:
+            dados = self._carregar_dados()
 
-            print("O paciente não está tomando nenhum medicamento.")
+            email = input("Digite seu email: ")
+            usuario, index = self._buscar_usuario_por_email(email, dados)
+
+            if usuario:
+                remedio = input("Digite o nome do remédio a ser receitado: ")
+                usuario.setdefault("Remedios_receitados", []).append(remedio)
+                
+                self._salvar_dados(dados)
+
+                self.clear_screen()
+                print(f"Remédio '{remedio}' receitado com sucesso para {usuario['Nome']}.")
+                time.sleep(2)
+
+            else:
+                print(f"Usuário com o email {email} não encontrado.")
+
+        except FileNotFoundError:
+            print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
+        except Exception as e:
+            print(f'Erro ao receitar remédio: {e}')
 
     def _carregar_dados_med(self):
         if pathlib.Path(self.MEDICO_FILE).exists():

@@ -48,7 +48,9 @@ class Usuario:
                 "Consultas": [],
                 "Saldo": 0,  
                 "Exames_solicitados":[],
-                "Exame_feitos":[]
+                "Exame_feitos":[],
+                "Remedios_receitados":[],
+                "Remedios_comprados":[]
             }
 
             dados.append(novo_usuario)
@@ -282,6 +284,31 @@ class Usuario:
             print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
         except Exception as e:
             print(f'Erro ao imprimir resultados de exames: {e}')
+
+    def print_remedios_receitados(self):
+        try:
+            dados = self._carregar_dados()
+
+            email = input("Digite seu email: ")
+            usuario, _ = self._buscar_usuario_por_email(email, dados)
+
+            if usuario:
+                remedios_receitados = usuario.get("Remedios_receitados", [])
+
+                if remedios_receitados:
+                    print("Remédios Receitados:")
+                    for i, remedio in enumerate(remedios_receitados, start=1):
+                        print(f"   -> Remédio {i}: {remedio}")
+                else:
+                    print("Nenhum remédio receitado.")
+
+            else:
+                print(f"Usuário com o email {email} não encontrado.")
+
+        except FileNotFoundError:
+            print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
+        except Exception as e:
+            print(f'Erro ao imprimir remédios receitados: {e}')
 
     def adiocionar_dinheiro(self):
             try:

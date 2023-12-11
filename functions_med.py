@@ -48,7 +48,7 @@ while True:
         medico1.consulta()
 
     elif escolha == '4':
-        medico1.solicitar_exame("Hemograma")
+        medico1.solicitar_exame()
 
     elif escolha == '3':
         usuario1.marcar_consulta()
