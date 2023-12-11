@@ -55,13 +55,15 @@ class Medico:
             for usuario in dados_med:
                 if usuario["Email"] == self.email and usuario["Senha"] == self._hash_senha(self.senha):
                     print("Login feito com sucesso!")
-                    print_prontuario()
+                    time.sleep(2)
                     return
                 elif usuario["Email"] == self.email and usuario["Senha"] != self.senha:
                     print("Senha incorreta")
+                    time.sleep(2)
                     return
                 elif usuario["Email"] != self.email and usuario["Senha"] == self.senha:
                     print("Email incorreto")
+                    time.sleep(2)
                     return
 
             print("Email não encontrado.")
@@ -72,9 +74,7 @@ class Medico:
             print(f'Erro ao realizar login: {e}')
 
     def print_prontuario(self):
-        clear_screen()
-        print_remedios()
-        print_exames()
+        
         
     def prescrever_medicacao(self, dados):
         try:

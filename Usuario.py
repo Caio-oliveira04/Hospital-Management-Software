@@ -46,7 +46,9 @@ class Usuario:
                 "Email": email,
                 "Senha": self._hash_senha(senha),
                 "Consultas": [],
-                "Saldo": 0  # Initialize the balance to zero
+                "Saldo": 0,  
+                "Exames_solicitados":[],
+                "Exame_feitos":[]
             }
 
             dados.append(novo_usuario)

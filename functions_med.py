@@ -1,13 +1,13 @@
-from Usuario import Usuario
+from Medico import Medico
 import os
-usuario1 = Usuario()
+medico1 = Medico()
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
                 
 
 while True:
-                                      
+    clear_screen()                                  
     ascii_art = """
                         _  _       _    _   __                                                      _
  _   _  ___  ___ _ __  (_)| |_ ___| |  | \ /  | __ _ _ ___  ___ _  ___ _  ___ _ __ ___   ___  _ ___| |_
@@ -17,16 +17,15 @@ while True:
                 |_|                                                 __/ | 
                                                                    |___/
 
-                     ___________________________________________________________
-                    /                                                            \\
-                    |                    Escolha uma opção                        |
-                    |                                                             |
-                    | 1 - Cadastrar-se               6 - Ver exames solicitados   |
-                    | 2 - Fazer Login                7 - Marcar exame             |
-                    | 3 - Marcar Consulta            8 - Ver Resultado do Exame   |
-                    | 4 - Remarcar Consulta          9 - Adicionar Dinheiro       |
-                    | 5 - Desmarcar Consulta         10 - Sair                    |
-                    \____________________________________________________________/
+                     _________________________________________
+                    /                                          \\
+                    |    Escolha uma opção                      |
+                    |                                           |
+                    |  1 - Fazer Loguin                         |
+                    |  2 - Atender paciente / ver prontuario    |
+                    |  3 - Prescrever rémedio                   |
+                    |  4 - Solicitar exame                      |
+                    \__________________________________________/
   
     
 
@@ -43,13 +42,7 @@ while True:
     clear_screen()  # Limpa a tela após o usuário fazer uma escolha
 
     if escolha == '1':
-        nome = input('Digite seu nome: ')
-        email = input('Digite seu e-mail: ')
-        senha = input('Digite sua senha: ')
-        usuario1.set_nome(nome)
-        usuario1.set_email(email)
-        usuario1.set_senha(senha)
-        usuario1.cadastro_user(nome, email, senha)
+        medico1.login_med()
 
     elif escolha == '2':
         email = input('Digite seu e-mail: ')
