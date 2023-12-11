@@ -9,24 +9,25 @@ def clear_screen():
 while True:
                                       
     ascii_art = """
- _   _                  _  _       _    _   __
-| | | | ___  ___ _ __  (_)| |_ ___| |  | \ /  | __ _ _ ___  ___ _  ___ _
-| |_| |/ _ \/ __| '_ \  _  __/ _' | |  |      |/ _' | '   \/ _ ' |/ _ ' |
-|  _  | (_) \__ \ |_) || | || (_| | |  |  \/  | (_) |  _  | (_)  | (_|  |
-|_| |_|\___/\___/ .__/ |_|\__\__,_|_|  |_|  |_|\__,_|_| |_|\___,_|\___, |
-                |_|                                                 __/ |
+                        _  _       _    _   __                                                      _
+ _   _  ___  ___ _ __  (_)| |_ ___| |  | \ /  | __ _ _ ___  ___ _  ___ _  ___ _ __ ___   ___  _ ___| |_
+| |_| |/ _ \/ __| '_ \  _  __/ _' | |  |      |/ _' | '   \/ _ ' |/ _ ' |/ _ \ '_ ' _ \ / _ \| '   \ __| 
+|  _  | (_) \__ \ |_) || | || (_| | |  |  \/  | (_) |  _  | (_)  | (_|  |   _/ | | | | |   _/|  _  | |_  
+|_| |_|\___/\___/ .__/ |_|\__\__,_|_|  |_|  |_|\__,_|_| |_|\___,_|\___, |\___|_| |_| |_|\___||_| |_|\__|
+                |_|                                                 __/ | 
                                                                    |___/
 
-                          _____________________________________
-                        /                                      \\
-                        |1 - C a d a s t r e - s e              | 
-                        |2 - F a z e r   L o g i n              |
-                        |3 - M a r c a r  c o n s u l t a       |
-                        |4 - R e m a r c a r  c o n s u l t a   |
-                        |5 - D e s m a r c a r  c o n su l t a  |
-                        |6 - A d i c i o n a r  d i n h e i r o |
-                        |7 - Sair                               |
-                        \_______________________________________/    
+                     ___________________________________________________________
+                    /                                                            \\
+                    |                    Escolha uma opção                       |
+                    |                                                            |
+                    |  1 - Cadastrar-se               5 - Desmarcar Consulta     |
+                    |  2 - Fazer Login                6 - Adicionar Dinheiro     |
+                    |  3 - Marcar Consulta            7 - Marcar Exame           |
+                    |  4 - Remarcar Consulta          8 - Ver Resultado do Exame |
+                    |                                 9 - Sair                   |
+                    \___________________________________________________________/
+  
     
 
     """
@@ -37,7 +38,7 @@ while True:
     # Print the lowercase ASCII art
     print(ascii_art_lower)                
 
-    escolha = input('Digite a opção desejada: ')
+    escolha = input()
 
     clear_screen()  # Limpa a tela após o usuário fazer uma escolha
 
@@ -64,7 +65,7 @@ while True:
         usuario1.remarcar_consulta()
 
     elif escolha == '5':
-        usuario1.desmarcar_consulta
+        usuario1.desmarcar_consulta()
 
     elif escolha == '6':
         usuario1.adiocionar_dinheiro()
