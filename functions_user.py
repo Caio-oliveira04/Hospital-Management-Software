@@ -68,6 +68,6 @@ while True:
         usuario1.desmarcar_consulta()
 
     elif escolha == '6':
-        usuario1.adiocionar_dinheiro()
+        usuario1.print_exames_solicitados()
     else:
         break

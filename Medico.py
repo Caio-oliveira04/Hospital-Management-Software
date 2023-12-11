@@ -25,7 +25,7 @@ class Medico:
             self.crm = input('Digite o CRM: ')
             self.especialidade = input('Digite a especialidade: ')
 
-            dados_med = self._carregar_dados()
+            dados_med = self._carregar_dados_med()
 
             novo_med = {
                 "Nome": self.nome,
@@ -37,7 +37,7 @@ class Medico:
 
             dados_med.append(novo_med)
 
-            self._salvar_dados(dados_med)
+            self._salvar_dados_med(dados_med)
 
             self.clear_screen()
             print('Cadastro feito com sucesso')
@@ -48,7 +48,7 @@ class Medico:
 
     def login_med(self):
         try:
-            dados_med = self._carregar_dados()
+            dados_med = self._carregar_dados_med()
             self.email = input('Digite o email: ')
             self.senha = input('Digite a senha: ')
 
@@ -73,8 +73,31 @@ class Medico:
         except Exception as e:
             print(f'Erro ao realizar login: {e}')
 
-    def print_prontuario(self):
-        
+
+    def solicitar_exame(self, nome_exame):
+        try:
+            dados = self._carregar_dados_user()
+
+            email = input("Digite seu email: ")
+            usuario, index = self._buscar_usuario_por_email(email, dados)
+
+            if usuario:
+                usuario["Exames_solicitados"].append(nome_exame)
+                self._salvar_dados_user(dados)  # Corrigido para salvar dados do usuário
+
+                self.clear_screen()
+                print(f'Exame "{nome_exame}" solicitado com sucesso!')
+                time.sleep(2)
+
+            else:
+                print(f"Usuário com o email {email} não encontrado.")
+
+        except FileNotFoundError:
+            print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
+        except Exception as e:
+            print(f'Erro ao solicitar o exame: {e}')
+
+            
         
     def prescrever_medicacao(self, dados):
         try:
@@ -103,22 +126,36 @@ class Medico:
             usuario["Medicamentos"].append(novo_medicamento)
 
             dados[index] = usuario  # Atualiza os dados do usuário na lista
-            self._salvar_dados(dados)
+            self._salvar_dados_med(dados)
 
         except Exception as e:
             print(f'Erro ao prescrever medicamento: {e}')
 
             print("O paciente não está tomando nenhum medicamento.")
 
-    def _carregar_dados(self):
+    def _carregar_dados_med(self):
         if pathlib.Path(self.MEDICO_FILE).exists():
             with open(self.MEDICO_FILE, "r") as arquivo:
                 return [json.loads(linha) for linha in arquivo]
         else:
             return []
 
-    def _salvar_dados(self, dados):
+    def _carregar_dados_user(self):
+        if pathlib.Path(self.CLIENTES_FILE).exists():
+            with open(self.CLIENTES_FILE, "r") as arquivo:
+                return [json.loads(linha) for linha in arquivo]
+        else:
+            return []
+
+
+    def _salvar_dados_med(self, dados):
         with open(self.MEDICO_FILE, "w") as arquivo:
+            for usuario in dados:
+                json.dump(usuario, arquivo)
+                arquivo.write('\n')
+
+    def _salvar_dados_user(self, dados):
+        with open(self.CLIENTES_FILE, "w") as arquivo:
             for usuario in dados:
                 json.dump(usuario, arquivo)
                 arquivo.write('\n')

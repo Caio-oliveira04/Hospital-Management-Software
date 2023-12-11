@@ -44,12 +44,8 @@ while True:
     if escolha == '1':
         medico1.login_med()
 
-    elif escolha == '2':
-        email = input('Digite seu e-mail: ')
-        senha = input('Digite sua senha: ')
-        usuario1.set_email(email)
-        usuario1.set_senha(senha)
-        usuario1.login_user(email, senha)
+    elif escolha == '4':
+        medico1.solicitar_exame("Hemograma")
 
     elif escolha == '3':
         usuario1.marcar_consulta()
