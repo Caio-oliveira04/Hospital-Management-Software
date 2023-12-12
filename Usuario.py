@@ -37,14 +37,18 @@ class Usuario:
     def get_saldo(self):
         return self.saldo
 
-    def cadastro_user(self, nome, email, senha):
+    def cadastro_user(self):
         try:
+            self.nome = input('Digite seu nome: ')
+            self.email = input('Digite seu e-mail: ')
+            self.senha = input('Digite sua senha: ')
+            
             dados = self._carregar_dados()
 
             novo_usuario = {
-                "Nome": nome,
-                "Email": email,
-                "Senha": self._hash_senha(senha),
+                "Nome": self.nome,
+                "Email": self.email,
+                "Senha": self._hash_senha(self.senha),
                 "Consultas": [],
                 "Saldo": 0,  
                 "Exames_solicitados":[],
@@ -64,19 +68,24 @@ class Usuario:
         except Exception as e:
             print(f'Erro ao salvar os dados: {e}')
 
-    def login_user(self, email, senha):
+    def login_user(self):
         try:
+            self.email = input('Digite seu e-mail: ')
+            self.senha = input('Digite sua senha: ')
             dados = self._carregar_dados()
 
             for usuario in dados:
-                if usuario["Email"] == email and usuario["Senha"] == self._hash_senha(senha):
+                if usuario["Email"] == self.email and usuario["Senha"] == self._hash_senha(self.senha):
                     print("Login feito com sucesso!")
+                    time.sleep(3)
                     return
-                elif usuario["Email"] == email and usuario["Senha"] != senha:
+                elif usuario["Email"] == self.email and usuario["Senha"] != self.senha:
                     print("Senha incorreta")
+                    time.sleep(3)
                     return
-                elif usuario["Email"] != email and usuario["Senha"] == senha:
+                elif usuario["Email"] != self.email and usuario["Senha"] == self.senha:
                     print("Email incorreto")
+                    time.sleep(3)
                     return
 
             print("Email não encontrado.")
@@ -149,6 +158,7 @@ class Usuario:
             usuario, index = self._buscar_usuario_por_email(email, dados)
 
             if usuario:
+                self.print_consultas_marcadas(email)
                 data_antiga = input('Digite a data a ser alterada: ')
                 nova_data = input('Digite a nova data para a consulta: ')
 
@@ -160,16 +170,13 @@ class Usuario:
                         consultas[i] = consulta.replace(data_antiga, nova_data)
                         encontrada = True
                         print(f"Data da consulta atualizada: {consulta} -> {consultas[i]}")
+                        time.sleep(2)
                         break
 
                 if not encontrada:
                     print(f"Nenhuma consulta encontrada para a data {data_antiga}")
 
                 self._salvar_dados(dados)
-
-                self.clear_screen()
-                print('Consulta remarcada com sucesso!')
-                time.sleep(2)
 
             else:
                 print(f"Usuário com o email {email} não encontrado.")
@@ -187,6 +194,7 @@ class Usuario:
             usuario, index = self._buscar_usuario_por_email(email, dados)
 
             if usuario:
+                self.print_consultas_marcadas()
                 data_antiga = input('Digite a data da consulta a ser desmarcada: ')
 
                 consultas = usuario.get("Consultas", [])
@@ -216,6 +224,7 @@ class Usuario:
         except Exception as e:
             print(f'Erro ao desmarcar a consulta: {e}')
 
+
     def print_exames_solicitados_e_marcar_exame(self):
         try:
             dados = self._carregar_dados()
@@ -243,13 +252,16 @@ class Usuario:
                             dados[index] = usuario
                             self._salvar_dados(dados)
                             print(f"Exame {exame_a_ser_marcado} marcado com sucesso para a data {data}.")
+                            time.sleep(3)
                         else:
                             print("Exame não encontrado na lista de exames solicitados.")
+                            time.sleep(3)
                     else:
                         print("Nenhum exame marcado.")
-
+                        time.sleep(3)
                 else:
                     print("Nenhum exame solicitado.")
+                    time.sleep(3)
             else:
                 print(f"Usuário com o email {email} não encontrado.")
 
@@ -258,11 +270,11 @@ class Usuario:
         except Exception as e:
             print(f'Erro ao imprimir/examinar exames solicitados: {e}')
 
-    def print_resultados_exames(self):
+    def print_resultados_exames(self, email):
         try:
             dados = self._carregar_dados()
 
-            email = input("Digite seu email: ")
+            email = email
             usuario, _ = self._buscar_usuario_por_email(email, dados)
 
             if usuario:
@@ -331,6 +343,32 @@ class Usuario:
 
             except ValueError:
                 print('Valor inválido. Certifique-se de inserir um número válido.')
+
+    def print_consultas_marcadas(self, email):
+        try:
+            dados = self._carregar_dados()
+
+            email = email
+            usuario, _ = self._buscar_usuario_por_email(email, dados)
+
+            if usuario:
+                consultas_marcadas = usuario.get("Consultas", [])
+
+                if consultas_marcadas:
+                    print("Consultas Marcadas:")
+                    for i, consulta in enumerate(consultas_marcadas, start=1):
+                        print(f"   -> Consulta {i}: {consulta}")
+                        print()
+                else:
+                    print("Nenhuma consulta marcada.")
+                    print()
+            else:
+                print(f"Usuário com o email {email} não encontrado.")
+
+        except FileNotFoundError:
+            print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
+        except Exception as e:
+            print(f'Erro ao imprimir consultas marcadas: {e}')
 
     def _carregar_dados(self):
         if pathlib.Path(self.CLIENTES_FILE).exists():

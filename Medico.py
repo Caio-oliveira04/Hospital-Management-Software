@@ -74,23 +74,24 @@ class Medico:
             print(f'Erro ao realizar login: {e}')
 
     def consulta(self):
-        
         dados = self._carregar_dados_user()
         email = input("Digite o email do paciente: ")
         usuario, index = self._buscar_usuario_por_email(email, dados)
 
         if usuario:
-            print('PRONTUARIO de {nome}')
+            print(f'PRONTUARIO de {usuario["Nome"]}')
+            
             usuario2 = Usuario()
-            usuario2.print_resultados_exames()
+            usuario2.print_resultados_exames(email)
 
-            decisao = input('Deseja Solicitar outro exame? ')
+            # Pergunte ao médico se deseja marcar um exame
+            decisao = input('Deseja marcar um exame para este paciente? (sim/não) ')
             if decisao.lower() == 'sim':
                 self.solicitar_exame(email)
         else:
             print(f"Usuário com o email {email} não encontrado.")
 
-    def solicitar_exame_interna(self, email):
+    def solicitar_exame(self, email):
         try:
             nome_exame = input('Qual o nome do exame a ser marcado? ')
             dados = self._carregar_dados_user()
@@ -100,11 +101,14 @@ class Medico:
             if usuario:
                 usuario["Exames_solicitados"].append(nome_exame)
                 self._salvar_dados_user(dados)  # Corrigido para salvar dados do usuário
-
-                self.clear_screen()
                 print(f'Exame "{nome_exame}" solicitado com sucesso!')
-                time.sleep(2)
-                return
+                print()
+                decisao = input('Deseja marcar mais alguem exame? (Sim/Não)?')
+                if decisao.lower() == 'sim':
+                    self.solicitar_exame(email)
+                else:
+                    time.sleep(2)
+                    return
             else:
                 print(f"Usuário com o email {email} não encontrado.")
 
@@ -113,30 +117,6 @@ class Medico:
         except Exception as e:
             print(f'Erro ao solicitar o exame: {e}')
 
-    def solicitar_exame_externa(self):
-        try:
-            nome_exame = input('Qual o nome do exame a ser marcado? ')
-            dados = self._carregar_dados_user()
-
-            email = input("Digite o email do paciente: ")
-            usuario, index = self._buscar_usuario_por_email(email, dados)
-
-            if usuario:
-                usuario["Exames_solicitados"].append(nome_exame)
-                self._salvar_dados_user(dados)  # Corrigido para salvar dados do usuário
-
-                self.clear_screen()
-                print(f'Exame "{nome_exame}" solicitado com sucesso!')
-                time.sleep(2)
-                return
-            else:
-                print(f"Usuário com o email {email} não encontrado.")
-
-        except FileNotFoundError:
-            print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
-        except Exception as e:
-            print(f'Erro ao solicitar o exame: {e}')        
-        
     def receitar_remedio(self):
         try:
             dados = self._carregar_dados()
