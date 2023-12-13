@@ -64,7 +64,8 @@ class Usuario:
             self.clear_screen()
             print('Cadastro feito com sucesso')
             time.sleep(2)
-            
+            return True
+        
         except Exception as e:
             print(f'Erro ao salvar os dados: {e}')
 
@@ -78,15 +79,15 @@ class Usuario:
                 if usuario["Email"] == self.email and usuario["Senha"] == self._hash_senha(self.senha):
                     print("Login feito com sucesso!")
                     time.sleep(2)
-                    return
+                    return True
                 elif usuario["Email"] == self.email and usuario["Senha"] != self.senha:
                     print("Senha incorreta")
                     time.sleep(2)
-                    return
+                    return False
                 elif usuario["Email"] != self.email and usuario["Senha"] == self.senha:
                     print("Email incorreto")
                     time.sleep(2)
-                    return
+                    return False
 
             print("Email não encontrado.")
             time.sleep(2)
@@ -177,7 +178,7 @@ class Usuario:
 
                 if not encontrada:
                     print(f"Nenhuma consulta encontrada para a data {data_antiga}")
-
+                    time.sleep(2)
                 self._salvar_dados(dados)
 
             else:
@@ -208,11 +209,13 @@ class Usuario:
                         consultas.remove(consulta)
                         encontrada = True
                         print(f"Consulta desmarcada: {consulta}")
+                        time.sleep(2)
                         break
 
                 if not encontrada:
                     print(f"Nenhuma consulta encontrada para a data {data_antiga}")
-
+                    time.sleep(2)
+                
                 self._salvar_dados(dados)
 
                 self.clear_screen()

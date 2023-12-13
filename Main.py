@@ -1,4 +1,4 @@
-from functions_user import menu_user
+from functions_user import login_user
 from functions_med import menu_med
 from funcions_servidor import menu_server
 
@@ -41,7 +41,7 @@ while True:
     clear_screen()  # Limpa a tela após o usuário fazer uma escolha
 
     if escolha == '1':
-       menu_user() 
+        login_user() 
 
     elif escolha == '2':
         menu_med()
