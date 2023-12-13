@@ -6,10 +6,9 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
                 
 def menu_user():
-    while True:
+    while True:   
 
-        clear_screen()   
-                   
+        clear_screen()           
         ascii_art = """
                             _  _       _    _   __                                                      _
      _   _  ___  ___ _ __  (_)| |_ ___| |  | \ /  | __ _ _ ___  ___ _  ___ _  ___ _ __ ___   ___  _ ___| |_

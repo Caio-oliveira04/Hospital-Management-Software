@@ -77,18 +77,19 @@ class Usuario:
             for usuario in dados:
                 if usuario["Email"] == self.email and usuario["Senha"] == self._hash_senha(self.senha):
                     print("Login feito com sucesso!")
-                    time.sleep(3)
+                    time.sleep(2)
                     return
                 elif usuario["Email"] == self.email and usuario["Senha"] != self.senha:
                     print("Senha incorreta")
-                    time.sleep(3)
+                    time.sleep(2)
                     return
                 elif usuario["Email"] != self.email and usuario["Senha"] == self.senha:
                     print("Email incorreto")
-                    time.sleep(3)
+                    time.sleep(2)
                     return
 
             print("Email não encontrado.")
+            time.sleep(2)
 
         except FileNotFoundError:
             print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')
@@ -109,7 +110,7 @@ class Usuario:
                                          "3 - Ginecologista\n"
                                          "4 - Neurologista\n"
                                          "5 - Pediatra\n"
-                                         "6 - Sair\n"))
+                                         "6 - Voltar\n"))
 
                 if especialista == 6:
                     return
@@ -140,6 +141,7 @@ class Usuario:
 
                 else:
                     print('Especialista inválido')
+                    time.sleep(2)
 
             else:
                 print(f"Usuário com o email {email} não encontrado.")
@@ -194,7 +196,8 @@ class Usuario:
             usuario, index = self._buscar_usuario_por_email(email, dados)
 
             if usuario:
-                self.print_consultas_marcadas()
+                
+                self.print_consultas_marcadas(email)
                 data_antiga = input('Digite a data da consulta a ser desmarcada: ')
 
                 consultas = usuario.get("Consultas", [])
@@ -337,7 +340,8 @@ class Usuario:
                     self.clear_screen()
                     print(f'Dinheiro adicionado com sucesso para {usuario_alvo["Nome"]}')
                     time.sleep(2)
-
+                    self.clear_screen()
+                    return
                 else:
                     print('Usuário não encontrado.')
 
