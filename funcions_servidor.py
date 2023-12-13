@@ -7,8 +7,6 @@ def clear_screen():
                 
 def menu_server():
     while True:
-
-        clear_screen()   
                    
         ascii_art = """
                             _  _       _    _   __                                                      _

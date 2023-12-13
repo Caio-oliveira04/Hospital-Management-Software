@@ -42,10 +42,10 @@ while True:
     clear_screen()  # Limpa a tela após o usuário fazer uma escolha
 
     if escolha == '1':
-     menu_user()
+        menu_user()
 
     elif escolha == '2':
-       menu_med()
+        menu_med()
 
     elif escolha == '3':
         menu_server()
