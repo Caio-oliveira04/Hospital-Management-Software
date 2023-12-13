@@ -1,5 +1,6 @@
 from functions_med import menu_med
 from functions_user import menu_user
+from funcions_servidor import menu_server
 
 import os
 
@@ -47,4 +48,4 @@ while True:
        menu_med()
 
     elif escolha == '3':
-        menu_servidor()
+        menu_server()
