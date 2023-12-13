@@ -21,11 +21,11 @@ def menu_server():
             /                                                                               \\
             |                    Escolha uma opção                                           |
             |                                                                                |
-            | 1 - Cadastrar medicos                      6 - Ver estoque                     |
-            | 2 - Alocar leitos                          7 - Adicionar funcionarios a escala |
-            | 3 - Mostrar ocupação dos leitos            8 - Mostrar a escala                |
-            | 4 - Desalocar leito                        9 - Ver faturamento geral           |
-            | 5 - Adicionar medicamento ao estoque       10 - Voltar                         |
+            | 1 - Cadastrar medicos                    6 - Adicionar medicamento ao estoque  |
+            | 2 - Cadastrar servidores                 7 - Ver estoque                       |
+            | 3 - Alocar leito                         8 - Adicionar funcionarios a escala   |
+            | 4 - Mostrar ocupação dos leitos          9 - Mostrar a escala                  |
+            | 5 - Desalocar leito                      10 - Voltar                           |
             \_______________________________________________________________________________/
 
 
@@ -42,8 +42,9 @@ def menu_server():
 
         if escolha == '1':
             servidor1.cadastro_medico()
-
-        elif escolha == '2':
+        
+        elif escolha == '3':
+            clear_screen()
             servidor1.reservar_quarto()
 
         elif escolha == '3':

@@ -127,30 +127,29 @@ class Servidor:
 
     def mostrar_quartos(self):
         try:
-            quartos = self._carregar_dados_quarto()
-            if not quartos:
-                print("Não há quartos cadastrados.")
+            dados_quarto = self._carregar_dados_quarto()
+
+            if not dados_quarto:
+                print("Não há quartos reservados no momento.")
                 return
 
-            print("\nStatus dos Quartos:")
-            for quarto in quartos:
-                print(f"Quarto {quarto.get('numero', 'N/A')} - Tipo: {quarto.get('tipo', 'N/A')}, Status: {quarto.get('status', 'N/A')}")
-            print()
+            print("\nQuartos Reservados:")
+            for quarto in dados_quarto:
+                print(f"Número do Quarto: {quarto.get('Numero')}")
+                print(f"Paciente: {quarto.get('Paciente', 'N/A')}")
+                print(f"Data de Check-in: {quarto.get('Data_checkin')}")
+                print(f"Dias de Estadia: {quarto.get('Dias estadia')}")
+                print("------------------------------")
 
         except FileNotFoundError:
             print("Erro: Arquivo de quartos não encontrado.")
         except json.JSONDecodeError:
             print("Erro: Problema ao decodificar o arquivo JSON.")
         except Exception as e:
-            print(f'Erro ao carregar e mostrar quartos: {e}')
+            print(f'Erro ao mostrar quartos: {e}')
 
     def reservar_quarto(self):
         try:
-            quartos = self._carregar_dados_quarto()
-            if not quartos:
-                print("Não há quartos cadastrados.")
-                return
-
             self.numero = input('Qual o número do quarto? ')
             print()
             self.paciente = input('Digite o nome do paciente: ')
@@ -159,48 +158,52 @@ class Servidor:
             print()
             self.dias_estadia = input('Quantos dias o paciente ficará internado? ')
 
-            quarto = next((q for q in quartos if q.get('numero') == self.numero and q.get('status') == "Disponível"), None)
-            if quarto:
-                quarto['status'] = "Ocupado"
-                quarto['paciente_atual'] = self.paciente
-                quarto['data_checkin'] = datetime.strptime(self.data_checkin, "%Y-%m-%d %H:%M:%S")
-                quarto['data_checkout'] = (quarto['data_checkin'] + timedelta(days=int(self.dias_estadia))).strftime("%Y-%m-%d %H:%M:%S")
-                print(f"Quarto {quarto.get('numero')} reservado para {self.paciente} até {quarto.get('data_checkout')}")
-                time.sleep(3)
-            else:
-                print(f"Quarto {self.numero} não disponível ou não existe.")
-                time.sleep(3)
+            dados_quarto = self._carregar_dados_quarto()
 
-        except FileNotFoundError:
-            print("Erro: Arquivo de quartos não encontrado.")
-        except json.JSONDecodeError:
-            print("Erro: Problema ao decodificar o arquivo JSON.")
-        except ValueError as ve:
-            print(f"Erro de valor: {ve}")
+            novo_quarto = {
+                "Numero": self.numero,
+                "Paciente": self.paciente,
+                "Data_checkin": self.data_checkin,
+                "Dias estadia": self.dias_estadia
+            }
+
+            dados_quarto.append(novo_quarto)
+
+            self._salvar_dados_quarto(dados_quarto)
+
+            self._clear_screen()
+            print(f'Qaurto reservado para {self.paciente}')
+            time.sleep(2)
+
         except Exception as e:
-            print(f'Erro ao reservar quarto: {e}')
+            print(f'Erro ao salvar os dados: {e}')
 
     def desocupar_quarto(self):
         try:
-            self.numero = input('Qual o número do quarto que será desocupado? ')
-            print()
-            quartos = self._carregar_dados_quarto()
-            quarto = next((q for q in quartos if q.get('numero') == self.numero and q.get('status') == "Ocupado"), None)
-            if quarto:
-                quarto['status'] = "Disponível"
-                quarto['paciente_atual'] = None
-                quarto['data_checkin'] = None
-                quarto['data_checkout'] = None
-                print(f"Quarto {quarto.get('numero')} desocupado.")
-            else:
-                print(f"Quarto {self.numero} não ocupado ou não existe.")
+            numero_quarto_desocupar = input('Digite o número do quarto a ser desocupado: ')
 
-        except FileNotFoundError:
-            print("Erro: Arquivo de quartos não encontrado.")
-        except json.JSONDecodeError:
-            print("Erro: Problema ao decodificar o arquivo JSON.")
+            dados_quarto = self._carregar_dados_quarto()
+
+            quarto_encontrado = False
+
+            for quarto in dados_quarto:
+                if quarto.get('Numero') == numero_quarto_desocupar:
+                    quarto_encontrado = True
+                    quarto['Paciente'] = 'N/A'
+                    quarto['Data_checkin'] = 'N/A'
+                    quarto['Dias estadia'] = 'N/A'
+                    break
+
+            if not quarto_encontrado:
+                print(f"Quarto {numero_quarto_desocupar} não encontrado.")
+            else:
+                self._salvar_dados_quarto(dados_quarto)
+                print(f'Quarto {numero_quarto_desocupar} desocupado com sucesso.')
+                time.sleep(2)
+
         except Exception as e:
-            print(f'Erro ao desocupar quarto: {e}')
+            print(f'Erro ao desocupar o quarto: {e}')
+        
 
     def adicionar_medicamento(self):
         try:
@@ -292,3 +295,7 @@ class Servidor:
 
     def _clear_screen(self):
         os.system('cls' if os.name == 'nt' else 'clear')
+
+
+
+

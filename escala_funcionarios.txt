@@ -1,0 +1,1 @@
+{"funcionario": "caio", "dias_trabalhados": "segunda, ter\u00e7a, quarta", "horas_por_dia": "8"}

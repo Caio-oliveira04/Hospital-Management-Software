@@ -1,0 +1,2 @@
+{"Numero": "102", "Paciente": "caio", "Data_checkin": "2023", "Dias estadia": "14"}
+{"Numero": "102", "Paciente": "caio", "Data_checkin": "11/20/2023", "Dias estadia": "8"}
