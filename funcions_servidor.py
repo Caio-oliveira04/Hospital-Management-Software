@@ -43,29 +43,30 @@ def menu_server():
         if escolha == '1':
             servidor1.cadastro_medico()
         
+        elif escolha == '2':
+            servidor1.cadastro_servidor()
+
         elif escolha == '3':
             clear_screen()
             servidor1.reservar_quarto()
 
-        elif escolha == '3':
+        elif escolha == '4':
             servidor1.mostrar_quartos()
        
-        elif escolha == '4':
+        elif escolha == '5':
             servidor1.desocupar_quarto()
 
-        elif escolha == '5':
+        elif escolha == '6':
             servidor1.adicionar_medicamento()
 
-        elif escolha == '6':
+        elif escolha == '7':
             servidor1.mostrar_medicamentos()
         
-        elif escolha == '7':
+        elif escolha == '8':
            servidor1.adicionar_escala()
 
-        elif escolha == '8':
-            servidor1.mostrar_escala()        
-
         elif escolha == '9':
-            servidor1.faturamento_geral()
+            servidor1.mostrar_escala()        
+            
         else:
             break

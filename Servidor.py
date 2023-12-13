@@ -3,7 +3,6 @@ import os
 import pathlib
 import time
 import hashlib
-from datetime import datetime, timedelta
 from Usuario import Usuario
 
 class Servidor:
