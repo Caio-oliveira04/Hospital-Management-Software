@@ -55,18 +55,3 @@ Simple version, for the first evaluation that will compose AB1, of the disciplin
 
 - Add automated tests to ensure software stability.
 - Consider adding new functionalities based on community feedback.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
