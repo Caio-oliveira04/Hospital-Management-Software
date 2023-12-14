@@ -2,7 +2,7 @@
 
 This is a project for the "Software Project" course. The software aims to provide comprehensive functionalities for hospital management.
 
-### 📋 Prerequisites
+## 📋 Prerequisites
 
 The only prerequisite to run the project is to have Python installed, as the libraries used are native to Python.
 
@@ -39,7 +39,7 @@ Simple version, for the first evaluation that will compose AB1, of the disciplin
 
 * **Caio Oliveira França dos Anjos**
 
-📄 Implementations
+##📄 Implementations
 1. **~~Patient Registration~~**
 2. **~~Appointment Scheduling~~**
 3. **~~Medical Record Management~~**
