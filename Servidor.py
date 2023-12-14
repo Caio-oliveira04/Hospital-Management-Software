@@ -124,6 +124,35 @@ class Servidor:
         except Exception as e:
             print(f'Erro ao salvar os dados: {e}')
 
+    def _login_servidor(self):
+        try:
+            dados_servidor = self._carregar_dados_serve()
+            self.email = input('Digite o email: ')
+            self.senha = input('Digite a senha: ')
+
+            for usuario in dados_servidor:
+                if usuario["Email"] == self.email and usuario["Senha"] == self._hash_senha(self.senha):
+                    print("Login feito com sucesso!")
+                    time.sleep(2)
+                    return True
+                elif usuario["Email"] == self.email and usuario["Senha"] != self.senha:
+                    print("Senha incorreta")
+                    time.sleep(2)
+                    return
+                elif usuario["Email"] != self.email and usuario["Senha"] == self.senha:
+                    print("Email incorreto")
+                    time.sleep(2)
+                    return
+
+            print("Email não encontrado.")
+            time.sleep(2)
+
+        except FileNotFoundError:
+            print(f'Arquivo não encontrado: {self.MEDICO_FILE}')
+        except Exception as e:
+            print(f'Erro ao realizar login: {e}')
+
+
     def mostrar_quartos(self):
         try:
             dados_quarto = self._carregar_dados_quarto()
@@ -139,7 +168,9 @@ class Servidor:
                 print(f"Data de Check-in: {quarto.get('Data_checkin')}")
                 print(f"Dias de Estadia: {quarto.get('Dias estadia')}")
                 print("------------------------------")
-
+            escape = input ('0 Para sair')
+            if escape == 0:
+                return
         except FileNotFoundError:
             print("Erro: Arquivo de quartos não encontrado.")
         except json.JSONDecodeError:
@@ -179,6 +210,7 @@ class Servidor:
 
     def desocupar_quarto(self):
         try:
+            self.mostrar_quartos()
             numero_quarto_desocupar = input('Digite o número do quarto a ser desocupado: ')
 
             dados_quarto = self._carregar_dados_quarto()
@@ -219,6 +251,7 @@ class Servidor:
             medicamentos.append(novo_medicamento)
             self._salvar_dados_medicamento(medicamentos)
             print(f"\nMedicamento {self.nome} adicionado ao estoque.\n")
+            time.sleep(2)
 
         except FileNotFoundError:
             print("Erro: Arquivo de medicamentos não encontrado.")
@@ -232,12 +265,17 @@ class Servidor:
             medicamentos = self._carregar_dados_medicamento()
             if not medicamentos:
                 print("Não há medicamentos cadastrados.")
+                time.sleep(2)
                 return
 
             print("\nEstoque de Medicamentos:")
             for medicamento in medicamentos:
                 print(f"{medicamento.get('nome', 'N/A')} - Quantidade: {medicamento.get('quantidade', 'N/A')}, Descrição: {medicamento.get('descricao', 'N/A')}")
-            print()
+                print("------------------------------")
+            
+            escape = input ('0 Para sair')
+            if escape == 0:
+                return
 
         except FileNotFoundError:
             print("Erro: Arquivo de medicamentos não encontrado.")
@@ -280,8 +318,10 @@ class Servidor:
             print("\nEscala de Funcionários:")
             for entrada in escala:
                 print(f"Funcionário: {entrada.get('funcionario', 'N/A')}, Dias Trabalhados: {entrada.get('dias_trabalhados', 'N/A')}, Horas por Dia: {entrada.get('horas_por_dia', 'N/A')}")
-            print()
-
+                print("------------------------------")
+            escape = input ('0 Para sair')
+            if escape == 0:
+                return
         except FileNotFoundError:
             print("Erro: Arquivo de escalas não encontrado.")
         except json.JSONDecodeError:

@@ -46,7 +46,7 @@ class Medico:
         except Exception as e:
             print(f'Erro ao salvar os dados: {e}')
 
-    def login_med(self):
+    def _login_med(self):
         try:
             dados_med = self._carregar_dados_med()
             self.email = input('Digite o email: ')
@@ -56,7 +56,7 @@ class Medico:
                 if usuario["Email"] == self.email and usuario["Senha"] == self._hash_senha(self.senha):
                     print("Login feito com sucesso!")
                     time.sleep(2)
-                    return
+                    return True
                 elif usuario["Email"] == self.email and usuario["Senha"] != self.senha:
                     print("Senha incorreta")
                     time.sleep(2)
@@ -67,6 +67,7 @@ class Medico:
                     return
 
             print("Email não encontrado.")
+
 
         except FileNotFoundError:
             print(f'Arquivo não encontrado: {self.MEDICO_FILE}')
@@ -119,23 +120,23 @@ class Medico:
 
     def receitar_remedio(self):
         try:
-            dados = self._carregar_dados()
+            dados = self._carregar_dados_user()
 
-            email = input("Digite seu email: ")
+            email = input("Digite o email do paciente: ")
             usuario, index = self._buscar_usuario_por_email(email, dados)
 
             if usuario:
                 remedio = input("Digite o nome do remédio a ser receitado: ")
                 usuario.setdefault("Remedios_receitados", []).append(remedio)
                 
-                self._salvar_dados(dados)
+                self._salvar_dados_user(dados)
 
-                self.clear_screen()
                 print(f"Remédio '{remedio}' receitado com sucesso para {usuario['Nome']}.")
                 time.sleep(2)
 
             else:
                 print(f"Usuário com o email {email} não encontrado.")
+                time.sleep(2)
 
         except FileNotFoundError:
             print(f'Arquivo não encontrado: {self.CLIENTES_FILE}')

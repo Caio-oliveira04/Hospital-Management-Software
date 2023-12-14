@@ -20,7 +20,8 @@ def login_user():
 
                                  --------------------
                                 | 1 - Cadastre-se    |
-                                | 2 - Fazer Login    |                
+                                | 2 - Fazer Login    |
+                                | 3 - Voltar         |                
                                 ----------------------
         
 
@@ -43,7 +44,8 @@ def login_user():
             cliente =  usuario1.login_user()
             if cliente:
                 menu_user()
-            
+        else:
+            return    
 
 def menu_user():
     while True:   
@@ -80,21 +82,27 @@ def menu_user():
 
        
         if escolha == '1':
+            clear_screen()
             usuario1.marcar_consulta()
 
         elif escolha == '2':
+            clear_screen()
             usuario1.remarcar_consulta()
 
         elif escolha == '3':
+            clear_screen()
             usuario1.desmarcar_consulta()
 
         elif escolha == '4':
+            clear_screen()
             usuario1.adiocionar_dinheiro()
 
         elif escolha == '5':
+            clear_screen()
             usuario1.print_exames_solicitados_e_marcar_exame()
         
         elif escolha == '6':
+            clear_screen()
             email = input('Digite seu email')
             usuario1.print_resultados_exames(email)
          

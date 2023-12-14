@@ -4,10 +4,16 @@ servidor1 = Servidor()
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
-                
+
+def login_serv():
+    
+    login =servidor1._login_servidor()
+    if login:
+        menu_server()
+
 def menu_server():
     while True:
-                   
+        clear_screen()           
         ascii_art = """
                             _  _       _    _   __                                                      _
      _   _  ___  ___ _ __  (_)| |_ ___| |  | \ /  | __ _ _ ___  ___ _  ___ _  ___ _ __ ___   ___  _ ___| |_
@@ -44,6 +50,7 @@ def menu_server():
             servidor1.cadastro_medico()
         
         elif escolha == '2':
+            clear_screen()
             servidor1.cadastro_servidor()
 
         elif escolha == '3':
@@ -51,22 +58,28 @@ def menu_server():
             servidor1.reservar_quarto()
 
         elif escolha == '4':
+            clear_screen()
             servidor1.mostrar_quartos()
        
         elif escolha == '5':
+            clear_screen()
             servidor1.desocupar_quarto()
 
         elif escolha == '6':
+            clear_screen()
             servidor1.adicionar_medicamento()
 
         elif escolha == '7':
+            clear_screen()
             servidor1.mostrar_medicamentos()
         
         elif escolha == '8':
+           clear_screen()
            servidor1.adicionar_escala()
 
         elif escolha == '9':
-            servidor1.mostrar_escala()        
-            
+            clear_screen()
+            servidor1.mostrar_escala()    
+        
         else:
             break

@@ -245,7 +245,8 @@ class Usuario:
                     print("Exames solicitados:")
                     for i, exame in enumerate(exames_solicitados, start=1):
                         print(f"   -> Exame {i}: {exame}")
-                    
+                        print("------------------------------")
+
                     marcar = input('Deseja marcar algum desses exames? ')
                     if marcar.lower() == 'sim':
                         exame_a_ser_marcado = input('Qual exame deseja marcar? ')
@@ -292,6 +293,10 @@ class Usuario:
                         print(f"   -> Exame {i}: {exame['Exame']}")
                         print(f"      Data: {exame['Data']}")
                         print(f"      Resultado: {exame['Resultado']}")
+                        print("------------------------------")
+                        escape = input ('0 Para sair')
+                        if escape == 0:
+                            return
                 else:
                     print("Nenhum resultado de exame disponível.")
 

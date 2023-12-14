@@ -1,6 +1,6 @@
 from functions_user import login_user
-from functions_med import menu_med
-from funcions_servidor import menu_server
+from functions_med import login_med
+from funcions_servidor import login_serv
 
 import os
 def clear_screen():
@@ -22,8 +22,8 @@ while True:
                  /                                     \\
                 |             Quem é você?              |
                 |             1 - Usuario               |
-                |             2 - Medico                |
-                |             3 - servidor              |                                                                                        |
+                |             2 - Médico                |
+                |             3 - Servidor              |                                                                                        |
                 \_______________________________________/
   
     
@@ -44,7 +44,7 @@ while True:
         login_user() 
 
     elif escolha == '2':
-        menu_med()
+        login_med()
 
     elif escolha == '3':
-        menu_server()
+        login_serv()
