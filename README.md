@@ -1,50 +1,57 @@
-# 3D Pov-Ray Suite
+# Hospital Management Software
 
-Este repositório contém o código-fonte e a documentação do projeto **3D Pov-Ray Suite**, desenvolvido como parte da disciplina de Engenharia de Software da Universidade Federal de Alagoas (UFAL). O objetivo do projeto é criar um aplicativo desktop para visualização, manipulação e renderização de cenas tridimensionais baseadas em arquivos POV-Ray.
+This is a project for the "Software Project" course. The software aims to provide comprehensive functionalities for hospital management.
 
----
+## 📋 Prerequisites
 
-## Descrição do Projeto
+The only prerequisite to run the project is to have Python installed, as the libraries used are native to Python.
 
-O **3D Pov-Ray Suite** é um aplicativo desenvolvido como módulo da plataforma NetBeans. Ele visa proporcionar uma experiência prática e interativa para usuários que trabalham com arquivos POV-Ray, permitindo:
+## 🛠️ Built with
 
-- Edição de arquivos `.pov` e `.inc` com recursos avançados, como realce de sintaxe e autocompletar.
-- Renderização integrada, exibindo os resultados diretamente na IDE.
-- Organização e categorização de projetos 3D.
-- Exportação de imagens renderizadas.
+* [Python](https://www.python.org/) - Programming language
+  - [Python Installation Guide](https://www.python.org/downloads/)
 
----
+* [Visual Studio Code](https://code.visualstudio.com/) - Integrated Development Environment (IDE)
+  - [Visual Studio Code Installation Guide](https://code.visualstudio.com/download/)
 
-## Tecnologias Utilizadas
 
-- **Java**: Linguagem principal para desenvolvimento.
-- **NetBeans Platform**: Framework modular para construção do aplicativo.
-- **POV-Ray Language**: Linguagem de script para modelagem 3D.
-- **Rendering External Process Integration**: Integração com o renderizador POV-Ray.
-- **File Type Recognition**: Reconhecimento e associação de arquivos `.pov` e `.inc`.
+## ⚙️ Running the tests
 
----
+With the project directory open in the Command Prompt, type "python Main.py" and follow the information presented in the terminal. To test user functionalities, simply choose the corresponding option in the main menu. After that, register or log in and explore the available options for a user.
 
-## Funcionalidades Principais
+To access doctor functionalities, make sure you are on the program's home screen and choose the option related to the doctor. Next, the login screen will appear. For testing purposes, there is already a registered doctor with the following credentials:
 
-1. **Edição de arquivos**: Suporte a realce de sintaxe e autocompletar para arquivos POV-Ray.
-2. **Renderização integrada**: Possibilidade de executar e visualizar renderizações diretamente na IDE.
-3. **Organização de projetos**: Ferramentas de busca e categorização de cenas.
-4. **Barra de progresso**: Indicação visual do status da renderização.
-5. **Compatibilidade**: Suporte a arquivos grandes e versões recentes do NetBeans.
+Email: med_teste@gmail.com
+Password: 123
+However, you can also register a doctor through the server functionalities.
 
----
-## Pré-requisitos
+To access server functionalities, in this case, a manager, use the following login:
 
-- **Java JDK 17**
-- **NetBeans IDE 17**
-- **POV-Ray** instalado e configurado no `PATH` do sistema
+Email: gerente@gmail.com
+Password: 123
+This way, you can test the options available for a manager.
 
----
+## 📌 Version
 
-## Autores
+Simple version, for the first evaluation that will compose AB1, of the discipline: Software Project
 
-- **Caio Oliveira França dos Anjos**
-- **Matheus Pedro da Silva**
+## ✒️ Authors
 
-Desenvolvido no Instituto de Computação - Universidade Federal de Alagoas (UFAL).
+* **Caio Oliveira França dos Anjos**
+
+## 📄 Implementations
+1. **~~Patient Registration~~**
+2. **~~Appointment Scheduling~~**
+3. **~~Medical Record Management~~**
+4. **~~Billing and Invoicing~~**
+5. **~~Prescription Management~~**
+6. **~~Lab Test Ordering and Reporting~~**
+7. **~~Ward and Bed Management~~**
+8. **~~Inventory Management~~**
+9. **~~Staff Scheduling~~**
+10. **Emergency Services Management**, I couldn't see how this functionality would be inserted into the program, as the software is not focused on the urgent and emergency area of a hospital, but rather on scheduling appointments and exams.
+
+## 🚀 Future Improvements
+
+- Add automated tests to ensure software stability.
+- Consider adding new functionalities based on community feedback.
